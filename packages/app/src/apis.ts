@@ -17,9 +17,20 @@ import {
   SessionApi,
   ApiRef,
   githubAuthApiRef,
+  identityApiRef,
 } from '@backstage/core-plugin-api';
 
 import { OAuth2 } from '@backstage/core-app-api';
+import {
+  apiDocsModuleWsdlApiRef,
+  ApiDocsModuleWsdlClient,
+  wsdlApiWidget,
+} from '@dweber019/backstage-plugin-api-docs-module-wsdl';
+
+import { ApiEntity } from '@backstage/catalog-model';
+
+
+import { apiDocsConfigRef, defaultDefinitionWidgets } from '@backstage/plugin-api-docs';
 
 export const tibcoOIDCAuthApiRef: ApiRef<
   OpenIdConnectApi & ProfileInfoApi & BackstageIdentityApi & SessionApi
@@ -67,4 +78,31 @@ export const apis: AnyApiFactory[] = [
       }),
   }),
   ScmAuth.createDefaultApiFactory(),
+
+  createApiFactory({
+    api: apiDocsModuleWsdlApiRef,
+    deps: {
+      identityApi: identityApiRef,
+      discoveryApi: discoveryApiRef,
+    },
+    factory: ({ identityApi, discoveryApi }) =>
+      new ApiDocsModuleWsdlClient({ identityApi, discoveryApi }),
+  }),
+  createApiFactory({
+    api: apiDocsConfigRef,
+    deps: {},
+    factory: () => {
+      // load the default widgets
+      const definitionWidgets = defaultDefinitionWidgets();
+      // add the wsdl-docs api widget to the definition widgets
+      definitionWidgets.push(wsdlApiWidget);
+      return {
+        getApiDefinitionWidget: (apiEntity: ApiEntity) => {
+          // find the widget for the type of api entity
+          return definitionWidgets.find(d => d.type === apiEntity.spec.type);
+        },
+      };
+    },
+  })
+  
 ];

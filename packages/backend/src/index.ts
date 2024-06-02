@@ -33,6 +33,9 @@ import { PluginEnvironment } from './types';
 import { ServerPermissionClient } from '@backstage/plugin-permission-node';
 import { DefaultIdentityClient } from '@backstage/plugin-auth-node';
 // import { createAuthMiddleware } from './plugins/authMiddleware';
+import apiDocsModuleWsdlDoc from './plugins/apiDocsModuleWsdl';
+
+import { createBackend } from '@backstage/backend-defaults';
 
 function makeCreateEnv(config: Config) {
   const root = getRootLogger();
@@ -113,6 +116,8 @@ async function main() {
 
   // // // Add backends ABOVE this line; this 404 handler is the catch-all fallback
   apiRouter.use(notFoundHandler());
+const apiDocsModuleWsdlDocEnv = useHotMemoize(module, () => createEnv('apiDocsModuleWsdl'));
+  apiRouter.use('/api-docs-module-wsdl', await apiDocsModuleWsdlDoc(apiDocsModuleWsdlDocEnv));
 
   const service = createServiceBuilder(module)
     .loadConfig(config)
@@ -124,7 +129,14 @@ async function main() {
     console.log(err);
     process.exit(1);
   });
+
+  
+  const backend = createBackend();
+  backend.add(import('@dweber019/backstage-plugin-api-docs-module-wsdl-backend'));
+  backend.start();
+
 }
+
 
 module.hot?.accept();
 main().catch(error => {
