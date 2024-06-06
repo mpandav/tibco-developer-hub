@@ -3552,7 +3552,7 @@
     yn "^4.0.0"
     zod "^3.22.4"
 
-"@backstage/plugin-catalog-common@^1.0.23":
+"@backstage/plugin-catalog-common@^1.0.22", "@backstage/plugin-catalog-common@^1.0.23":
   version "1.0.23"
   resolved "https://registry.yarnpkg.com/@backstage/plugin-catalog-common/-/plugin-catalog-common-1.0.23.tgz#2ba1fe13450f6283e049acc83aa4fcebda6153e8"
   integrity sha512-u04VUq/2wNjF9ikpGxdt1kXSQf5VlPDWTwzYyJYKD80qGa6l/klUXJ3IBs8P4XyQObkPNyS/Tho/H8XDFNeqEw==
@@ -3759,6 +3759,31 @@
     react-resizable "^3.0.4"
     react-use "^17.2.4"
     zod "^3.22.4"
+
+"@backstage/plugin-jenkins-common@^0.1.26":
+  version "0.1.26"
+  resolved "https://registry.yarnpkg.com/@backstage/plugin-jenkins-common/-/plugin-jenkins-common-0.1.26.tgz#fc6d02e31dbf5a14eae5f927e817dc888d754c29"
+  integrity sha512-+2zInw59Txap7pGsZEIQbIi3zOIMl9hhQk1Ray/zXpt9B7D6KWQJmHuxoVrcwqPJhFJ03mraJL/zWY2nU8Fhvg==
+  dependencies:
+    "@backstage/plugin-catalog-common" "^1.0.22"
+    "@backstage/plugin-permission-common" "^0.7.13"
+
+"@backstage/plugin-jenkins@^0.9.10":
+  version "0.9.10"
+  resolved "https://registry.yarnpkg.com/@backstage/plugin-jenkins/-/plugin-jenkins-0.9.10.tgz#3c2e03cdefc58033ebd080318a3ac0c9cd43821a"
+  integrity sha512-mBL6Jo2wgpPGz0sMEJYix/IQ3F+UvJmV1ggBUyVprUlzJ2bvV4unIaF3O452ZUD8vIgHd2fq6pFw5UsHyERtqg==
+  dependencies:
+    "@backstage/catalog-model" "^1.4.5"
+    "@backstage/core-components" "^0.14.4"
+    "@backstage/core-plugin-api" "^1.9.2"
+    "@backstage/errors" "^1.2.4"
+    "@backstage/plugin-catalog-react" "^1.11.3"
+    "@backstage/plugin-jenkins-common" "^0.1.26"
+    "@material-ui/core" "^4.12.2"
+    "@material-ui/icons" "^4.9.1"
+    "@types/react" "^16.13.1 || ^17.0.0 || ^18.0.0"
+    luxon "^3.0.0"
+    react-use "^17.2.4"
 
 "@backstage/plugin-kubernetes-backend@^0.17.1":
   version "0.17.1"
@@ -10438,12 +10463,19 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
-"@types/react-dom@*", "@types/react-dom@<18.0.0", "@types/react-dom@^17", "@types/react-dom@^18.0.0":
+"@types/react-dom@*", "@types/react-dom@<18.0.0", "@types/react-dom@^17":
   version "17.0.20"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.20.tgz#e0c8901469d732b36d8473b40b679ad899da1b53"
   integrity sha512-4pzIjSxDueZZ90F52mU3aPoogkHIoSIDG+oQ+wQK7Cy2B9S+MvOqY0uEA/qawKz381qrEDkvpwyt8Bm31I8sbA==
   dependencies:
     "@types/react" "^17"
+
+"@types/react-dom@^18.0.0":
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.3.0.tgz#0cbc818755d87066ab6ca74fbedb2547d74a82b0"
+  integrity sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==
+  dependencies:
+    "@types/react" "*"
 
 "@types/react-is@^18.2.1":
   version "18.2.1"

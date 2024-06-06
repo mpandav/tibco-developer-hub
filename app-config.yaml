@@ -4,11 +4,11 @@ app:
   support:
     url: https://support.tibco.com/s/
     items:
-      - title: 'TIBCO Support Page'
-        icon: 'email'
-        links:
-          - url: 'https://support.tibco.com/s/'
-            title: 'TIBCO Support'
+    - title: 'TIBCO Support Page'
+      icon: 'email'
+      links:
+      - url: 'https://support.tibco.com/s/'
+        title: 'TIBCO Support'
 
 organization:
   name: TIBCO Software's
@@ -47,21 +47,20 @@ backend:
       host: ${POSTGRES_HOST}
       port: ${POSTGRES_PORT}
       user: ${POSTGRES_USER}
-      password:
-        ${POSTGRES_PASSWORD}
-        # https://node-postgres.com/features/ssl
-        #ssl: require # see https://www.postgresql.org/docs/current/libpq-ssl.html Table 33.1. SSL Mode Descriptions (e.g. require)
+      password: ${POSTGRES_PASSWORD}
+      # https://node-postgres.com/features/ssl
+      #ssl: require # see https://www.postgresql.org/docs/current/libpq-ssl.html Table 33.1. SSL Mode Descriptions (e.g. require)
       #ca: # if you have a CA file and want to verify it you can uncomment this section
       #$file: <file-path>/ca/server.crt
 
 integrations:
   github:
-    - host: github.com
-      # apps:
-      #   - $include: github-backstage-app-credentials.yaml
-      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
-      # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
-      token: ${GITHUB_TOKEN}
+  - host: github.com
+    # apps:
+    #   - $include: github-backstage-app-credentials.yaml
+    # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
+    # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
+    token: ${GITHUB_TOKEN}
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3
@@ -117,3 +116,9 @@ catalog:
 # You can set the refresh rate of catalog (in milliseconds) for catalog API to fetch changes from GitHub, by using the below config.
 # The allowed range is [100,900]
 # catalogRefreshDelayInSec: 300
+proxy:
+  '/jenkins/api':
+    target: 'http://localhost:18080'
+    changeOrigin: true
+    headers:
+      Authorization: Basic 11019aea33bd5d45a8ae0ff11e4daeeaae
