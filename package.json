@@ -64,6 +64,7 @@
     ]
   },
   "dependencies": {
+    "@backstage/plugin-api-docs": "^0.11.5",
     "@backstage/plugin-catalog-backend-module-github": "^0.6.1",
     "@types/react": "^17",
     "@types/react-dom": "^17"

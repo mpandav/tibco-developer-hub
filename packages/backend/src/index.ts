@@ -105,6 +105,9 @@ async function main() {
 
   // // // Add backends ABOVE this line; this 404 handler is the catch-all fallback
   apiRouter.use(authMiddleware, notFoundHandler());*/
+  const apiDocsModuleWsdlDocEnv = useHotMemoize(module, () => createEnv('apiDocsModuleWsdl'));
+  const backend = createBackend();
+  backend.add(import('@dweber019/backstage-plugin-api-docs-module-wsdl-backend'));
 
   const apiRouter = Router();
   apiRouter.use('/catalog', await catalog(catalogEnv));
@@ -113,11 +116,10 @@ async function main() {
   apiRouter.use('/techdocs', await techdocs(techdocsEnv));
   apiRouter.use('/proxy', await proxy(proxyEnv));
   apiRouter.use('/search', await search(searchEnv));
+  apiRouter.use ('/api-docs-module-wsdl', await apiDocsModuleWsdlDoc(apiDocsModuleWsdlDocEnv));
 
   // // // Add backends ABOVE this line; this 404 handler is the catch-all fallback
   apiRouter.use(notFoundHandler());
-const apiDocsModuleWsdlDocEnv = useHotMemoize(module, () => createEnv('apiDocsModuleWsdl'));
-  apiRouter.use('/api-docs-module-wsdl', await apiDocsModuleWsdlDoc(apiDocsModuleWsdlDocEnv));
 
   const service = createServiceBuilder(module)
     .loadConfig(config)
@@ -129,11 +131,6 @@ const apiDocsModuleWsdlDocEnv = useHotMemoize(module, () => createEnv('apiDocsMo
     console.log(err);
     process.exit(1);
   });
-
-  
-  const backend = createBackend();
-  backend.add(import('@dweber019/backstage-plugin-api-docs-module-wsdl-backend'));
-  backend.start();
 
 }
 
