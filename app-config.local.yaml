@@ -60,6 +60,7 @@ proxy:
     changeOrigin: true
     headers:
       Authorization: Basic ${JENKINS_BASIC_AUTH_HEADER}
+# jenkins backend      
 jenkins:
   baseUrl: ${JENKINS_URL}
   #https://jenkins.localhost.dataplanes.pro/
@@ -67,4 +68,5 @@ jenkins:
   apiKey: ${JENKINS_BASIC_AUTH_HEADER}
   jenkinsActionSecretEncryptionKey: ZGVtbzEyMw==
   jenkinsActionJobAuthToken: ${JENKINS_JOB_AUTH}
-  #BuildEARToken
+
+#BuildEARToken
