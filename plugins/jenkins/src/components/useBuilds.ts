@@ -48,7 +48,7 @@ export function useBuilds({ branch }: { branch?: string } = {}) {
   const restartBuild = async (jobFullName: string, buildNumber: string) => {
     try {
       await api.retry({ entity: entityName, jobFullName, buildNumber });
-    } catch (e) {
+    } catch (e:any) {
       errorApi.post(e);
     }
   };
@@ -67,7 +67,7 @@ export function useBuilds({ branch }: { branch?: string } = {}) {
       setTotal(build.length);
 
       return build;
-    } catch (e) {
+    } catch (e:any) {
       const errorType = e.notFound
         ? ErrorType.NOT_FOUND
         : ErrorType.CONNECTION_ERROR;
