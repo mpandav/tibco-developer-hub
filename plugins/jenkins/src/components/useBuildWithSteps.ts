@@ -43,7 +43,7 @@ export function useBuildWithSteps({
     try {
       const entityName = await getCompoundEntityRef(entity);
       return api.getBuild({ entity: entityName, jobFullName, buildNumber });
-    } catch (e) {
+    } catch (e: any) {
       errorApi.post(e);
       return Promise.reject(e);
     }

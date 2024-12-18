@@ -145,7 +145,7 @@ export class JenkinsBuilder {
           response.json({
             projects: projects,
           });
-        } catch (err) {
+        } catch (err: any) {
           // Promise.any, used in the getProjects call returns an Aggregate error message with a useless error message 'AggregateError: All promises were rejected'
           // extract useful information ourselves
           if (err.errors) {

@@ -233,7 +233,7 @@ export const columnFactories = Object.freeze({
                   severity: 'success',
                   display: 'transient',
                 });
-              } catch (e) {
+              } catch (e: any) {
                 alertApi.post({
                   message: `Jenkins re-build has failed. Error: ${e.message}`,
                   severity: 'error',

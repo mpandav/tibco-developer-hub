@@ -45,7 +45,7 @@ export function useJobRuns(jobFullName: string) {
         jobFullName,
       });
       return jobBuilds;
-    } catch (e) {
+    } catch (e: any) {
       const errorType = e.notFound
         ? ErrorType.NOT_FOUND
         : ErrorType.CONNECTION_ERROR;

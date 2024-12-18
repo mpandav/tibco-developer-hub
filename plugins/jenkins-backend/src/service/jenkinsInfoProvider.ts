@@ -340,7 +340,7 @@ export class DefaultJenkinsInfoProvider implements JenkinsInfoProvider {
       if (regex.test(url)) {
         return true;
       }
-    } catch (e) {
+    } catch (e: any) {
       logger.warn(`Invalid regex: "${regexString}" - Error: ${e.message}`);
     }
     return false;
