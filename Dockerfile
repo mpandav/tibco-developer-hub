@@ -1,5 +1,5 @@
 # Stage 1 - Create yarn install skeleton layer
-FROM node:18.20-alpine3.19 AS packages
+FROM  --platform=linux/amd64 node:18.20-alpine3.19 AS packages
 
 WORKDIR /app
 COPY package.json yarn.lock ./
@@ -12,15 +12,16 @@ COPY plugins plugins
 RUN find packages \! -name "package.json" -mindepth 2 -maxdepth 2 -exec rm -rf {} \+
 
 # Stage 2 - Install dependencies and build packages
-FROM node:18.20-alpine3.19 AS build
+FROM  --platform=linux/amd64 node:18.20-alpine3.19 AS build
+
 
 RUN --mount=type=cache,target=/var/cache/apk,sharing=locked \
     --mount=type=cache,target=/var/lib/apk,sharing=locked \
     apk update && \
-    apk add python3 g++ make && \
+    apk add python3 g++ make pkgconf pixman-dev cairo pango pango-dev cairo-dev jpeg-dev  giflib-dev && \
     yarn config set python /usr/bin/python3
 
-USER node
+
 WORKDIR /app
 
 COPY --from=packages --chown=node:node /app .
@@ -42,10 +43,10 @@ RUN mkdir packages/backend/dist/skeleton packages/backend/dist/bundle \
 # Stage 3 - Build the actual backend image and install production dependencies
 FROM --platform=linux/amd64 chainguard/wolfi-base
 
-ENV NODE_VERSION 18=~18.20
-ENV PYTHON_VERSION 3.12=~3.12
+ENV NODE_VERSION 20=~20.18.1
+ENV PYTHON_VERSION 3.13=~3.13
 
-RUN apk update && apk add nodejs-$NODE_VERSION yarn
+RUN apk update && apk add nodejs-$NODE_VERSION yarn  
 
 # Install sqlite3 dependencies. You can skip this if you don't use sqlite3 in the image,
 # in which case you should also move better-sqlite3 to "devDependencies" in package.json.
@@ -54,7 +55,7 @@ RUN apk update && apk add nodejs-$NODE_VERSION yarn
 RUN --mount=type=cache,target=/var/cache/apk,sharing=locked \
     --mount=type=cache,target=/var/lib/apk,sharing=locked \
     apk update && \
-    apk add python-$PYTHON_VERSION make py3-pip python-3-dev py3-setuptools build-base gcc libffi-dev glibc-dev openssl-dev brotli-dev c-ares-dev nghttp2-dev icu-dev zlib-dev gcc-12 libuv-dev && \
+    apk add python-$PYTHON_VERSION make py3-pip python-3-dev py3-setuptools build-base gcc libffi-dev glibc-dev openssl-dev brotli-dev c-ares-dev nghttp2-dev icu-dev zlib-dev gcc-12 libuv-dev  && \
     yarn config set python /usr/bin/python3
 
 # Set up a virtual environment for mkdocs-techdocs-core.
@@ -62,7 +63,7 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN pip3 install setuptools
-
+RUN pip3 install --upgrade setuptools
 RUN pip3 install mkdocs-techdocs-core==1.3.3
 
 WORKDIR /app
